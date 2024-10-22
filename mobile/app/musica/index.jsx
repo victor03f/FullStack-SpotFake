@@ -17,3 +17,4 @@ export default Cadastro = () => {
     )
 
 }
+const style = StyleSheet.create({})

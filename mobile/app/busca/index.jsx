@@ -9,9 +9,8 @@ export default Cadastro = () => {
 
     return(
         <View>
-        <NavSpotSound/>
             <Text>
-               Home
+            Busca
             </Text>
         </View>
     )
