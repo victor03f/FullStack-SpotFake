@@ -1,19 +1,54 @@
 import React from "react";
 import { useState, useRef } from "react";
 import { View, Text, StyleSheet, Image, Button, SafeAreaView, TouchableOpacity, ImageBackground, Pressable, TextInput } from "react-native";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 
 
 export default Cadastro = () => {
 
 
-    const [nome, onChangeNome] = React.useState();
-    const [email, onChangeEmail] = React.useState();
-    const [password, onChangePassword] = React.useState();
-    const [CPF, onChangeCPF] = React.useState();
-    const [telefone, onChangeTelefone] = React.useState();
+    const [nome, onChangeNome] = React.useState("");
+    const [email, onChangeEmail] = React.useState("");
+    const [senha, onChangesenha] = React.useState("");
+    const [sobrenome, onChangesobrenome] = React.useState("");
+    const [telefone, onChangeTelefone] = React.useState("");
 
+    const enviarCadastro = async () => {
+        console.log(nome)
+        if (!nome || !senha || !email || !sobrenome || !telefone) {
+            alert("Prencha todos os campos corretamente")
+        }
+        try {
+            const resposta = await fetch('http://localhost:8000/registro', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    nome,
+                    sobrenome,
+                    email,
+                    senha,
+                    telefone,
+                })
+            })
+        } catch(e) {
+            console.log(e)
+        }
 
+        console.log(resposta)
+        if (resposta.status === 200) {
+            alert("user criado com sucesso")
+            router.replace('../home')
+            console.log(resposta)
+            
+        }
+        else if (resposta.status == 409){
+            alert("Email já cadastrado")
+            
+        }
+    }
 
 
 
@@ -27,40 +62,40 @@ export default Cadastro = () => {
 
                 <TextInput
                     style={style.input}
-                    onChangeNome={onChangeNome}
+                    onChangeText={(text) => onChangeNome(text)}
                     value={nome}
-                    placeholder="Escreva Seu nome"
+                    placeholder="Escreva seu nome"
                 />
-
                 <TextInput
                     style={style.input}
-                    onChangeEmail={onChangeEmail}
+                    onChangeText={(text) => onChangesobrenome(text)}
+                    value={sobrenome}
+                    placeholder="Escreva seu sobrenome"
+                />
+                <TextInput
+                    style={style.input}
+                    onChangeText={(text) => onChangeEmail(text)}
                     value={email}
                     placeholder="Escreva seu email"
                 />
                 <TextInput
                     style={style.input}
-                    onChangePassword={onChangePassword}
-                    value={password}
+                    onChangeText={(text) => onChangesenha(text)}
+                    value={senha}
                     placeholder="Escreva sua senha"
                 />
+
                 <TextInput
                     style={style.input}
-                    onChangeCPF={onChangeCPF}
-                    value={CPF}
-                    placeholder="Escreva seu CPF(Apenas Numeros)"
-                />
-                <TextInput
-                    style={style.input}
-                    onChangeTelefone={onChangeTelefone}
+                    onChangeText={(text) => onChangeTelefone(text)}
                     value={telefone}
                     placeholder="Escreva Seu telefone"
                 />
-                
+
             </View>
-            <Link href={'../home'} style = {style.botao}>
-                <Text> Enviar</Text>
-            </Link>
+            <Pressable style={style.button} onPress={enviarCadastro}>
+                            <Text style={style.textButton}>Enviar registo</Text>
+                        </Pressable>
         </View>
     )
 }
@@ -82,7 +117,7 @@ const style = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    botao:{
+    botao: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
