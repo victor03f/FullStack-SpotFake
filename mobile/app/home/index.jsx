@@ -13,9 +13,8 @@ export default Cadastro = () => {
             <Text>
                Home
             </Text>
-            <View style ={style.footer}>
 
-            
+            <View style ={style.footer}>
             <FooterNav />
             </View>
         </View>
@@ -24,9 +23,9 @@ export default Cadastro = () => {
 }
 const style = StyleSheet.create({
 footer:{
-justifyContent: 's',
+justifyContent: 'flex-end',
 alignContent: 'flex-end',
-marginTop: 19
+marginTop: 19,
 
 },
 })
