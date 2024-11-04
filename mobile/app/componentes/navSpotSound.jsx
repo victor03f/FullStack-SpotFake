@@ -1,6 +1,6 @@
 import { Link } from "expo-router";
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Pressable, } from "react-native"
+import { View, Text, StyleSheet, Pressable, Image } from "react-native"
 
 
 const style = StyleSheet.create({
@@ -17,12 +17,28 @@ const style = StyleSheet.create({
         justifyContent: 'space-around',
 
     },
+    picture:{
+        width: 200,
+        height: 200,
+        display: 'flex',
+        alignSelf: 'center',
+        borderRadius: 100,
+        marginTop: 20
+    }
 })
 export default navSpotsound = (props) => {
 
     return (
         <View style={style.navView}>
-
+            <Pressable>
+                <Link href={'../perfil'}>
+                
+            <Image
+                style={style.picture}
+                source={require('../../assets/images/perfil.jpg')}
+            />
+            </Link>
+            </Pressable>
             <Pressable>
                 <Link href={'../home'}>
                     <Text style={style.TextView}>

@@ -86,6 +86,9 @@ const Login = () => {
             <Link href={'./busca'} style={styles.button}>
                 <Text style={styles.buttonText}>Busca</Text>
             </Link>
+            <Link href={'./perfil'} style={styles.button}>
+                <Text style={styles.buttonText}>perfil</Text>
+            </Link>
             <Pressable style={styles.button} onPress={fazerlogin}>
                 <Text style={styles.buttonText}>Entrar</Text>
             </Pressable>

@@ -5,15 +5,14 @@ import { Link } from "expo-router";
 import NavSpotSound from "../componentes/navSpotSound";
 import FooterNav from "../componentes/footerNav";
 
+
 export default Cadastro = () => {
 
     return(
         <View>
         <NavSpotSound />
-            <Text>
-               Home
-            </Text>
-
+          
+    
             <View style ={style.footer}>
             <FooterNav />
             </View>
