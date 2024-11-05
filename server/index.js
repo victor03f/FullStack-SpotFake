@@ -7,6 +7,8 @@ app.use(Express.json())
 app.use(cors())
 app.use('/autenticacao', rotas)
 app.use('/adm', rotas_user)
+app.use('/user', rotas_user)
+app.use('/delete', rotas_user)
 
 
 

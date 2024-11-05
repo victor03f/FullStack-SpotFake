@@ -22,4 +22,20 @@ const listaUser = async (req, res) => {
     }
 };
 
-export { listaUser };
+const GetUser = async (req, res) => {
+    const user_id = req.params.id
+    const user = await User.findOne({ where: { id: user_id } })
+    res.send(user)
+};
+
+const deleteUser = async (req, res) => {
+    const user_delete = req.params.id
+    await User.destroy({
+        where: {
+          id: user_delete,
+        },
+      });
+      res.send('deletado')
+}
+
+export { listaUser, GetUser, deleteUser };
