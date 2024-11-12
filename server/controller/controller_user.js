@@ -37,5 +37,8 @@ const deleteUser = async (req, res) => {
       });
       res.send('deletado')
 }
+const trocarfotoUser = async (req, res) =>{
+    
+}
 
 export { listaUser, GetUser, deleteUser };

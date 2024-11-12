@@ -4,16 +4,80 @@ import * as ImagePicker from 'expo-image-picker';
 import { FontAwesome } from '@expo/vector-icons';
 import axios from 'axios';
 
-const Perfil = () => {
+export default Perfil = () => {
+
+    const [newImage, setNewImage] = useState(false);
+
+
+
+    const handleSendimage = async () => {
+        try {
+            const data = {
+                "file": user.profileImage,
+                "upload_preset": 'ml_default',
+                "name": "teste",
+            }
+            const res = await fetch('https://api.cloudinary.com/v1_1/dzcyvhf6h/upload', {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+            const result = await res.json();
+            console.log(result.url);
+            enviarImgParaBackend(result.url)
+
+        }
+
+        catch (e) {
+            console.log(e)
+        }
+    }
+
+
+
+
+    const enviarImgParaBackend = async (url) => {
+        try {
+            const resposta = await fetch('http://localhost:8000/profile/1', { //trocar a rota depois
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    url: url
+                })
+            })
+        
+            console.log(resposta)
+            if (resposta.status === 200) {
+                
+                console.log(resposta)
+                
+            }
+            else if (resposta.status == 409){
+                alert("Email já cadastrado")
+                
+            }
+        } catch(e) {
+            console.log(e)
+        }
+
+
+    }
+
+
+
     const [user, setUser] = useState({
         username: 'Nome do Usuário',
         email: 'usuario@email.com',
         createdAt: '2023-01-01',
-        profileImage: null, // URL da imagem de perfil ou `null` para imagem padrão
+        profileImage: null,
     });
 
     const pickImage = async () => {
-        // Solicita permissão para acessar a galeria
         const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
         if (!permissionResult.granted) {
@@ -21,7 +85,7 @@ const Perfil = () => {
             return;
         }
 
-        // Abre a galeria para o usuário selecionar uma imagem
+
         const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
@@ -31,7 +95,7 @@ const Perfil = () => {
 
         if (!result.canceled) {
             setUser(prevState => ({ ...prevState, profileImage: result.assets[0].uri }));
-            // Aqui você pode implementar o upload da imagem ao backend se necessário
+            setNewImage(true)
         }
     };
 
@@ -62,7 +126,12 @@ const Perfil = () => {
                     )}
                     <Text style={styles.changePhotoText}>Alterar Foto</Text>
                 </Pressable>
-                
+
+
+
+                {newImage && <Pressable onPress={handleSendimage} style={styles.editButton}>
+                    <Text style={styles.editButtonText}>Salvar foto</Text></Pressable>}
+
                 <Text style={styles.username}>{user.username}</Text>
                 <Text style={styles.email}>{user.email}</Text>
                 <Text style={styles.joinDate}>Membro desde {user.createdAt}</Text>
@@ -129,4 +198,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Perfil;
+
