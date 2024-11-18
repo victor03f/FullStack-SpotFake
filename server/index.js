@@ -15,5 +15,9 @@ app.use('/delete', rotas_user)
 
 
 app.listen(8000)
-//import { criarTabelas } from "./db.js";
-//criarTabelas()
+
+
+
+
+// import { criarTabelas } from "./db.js";
+// criarTabelas()

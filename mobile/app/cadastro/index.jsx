@@ -139,43 +139,45 @@ const Cadastro = () => {
     const [telefone, onChangeTelefone] = React.useState("");
 
     const enviarCadastro = async () => {
-                console.log(nome)
-                if (!nome || !senha || !email || !sobrenome || !telefone) {
-                    alert("Prencha todos os campos corretamente")
+        console.log(nome);
+        if (!nome || !senha || !email || !sobrenome || !telefone) {
+            alert("Preencha todos os campos corretamente");
+            return;
+        }
+        try {
+            const resposta = await fetch('http://localhost:8000/autenticacao/registro', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    nome,
+                    sobrenome,
+                    email,
+                    senha,
+                    telefone,
+                }),
+            });
+    
+            // Verificar se a resposta é um sucesso (200 OK)
+            if (!resposta.ok) {
+                // Pode ser tratado mais genericamente, como resposta.status >= 400
+                if (resposta.status === 409) {
+                    alert("Email já cadastrado");
+                } else {
+                    alert("Erro ao criar o usuário");
                 }
-                try {
-                    const resposta = await fetch('http://localhost:8000/autenticacao/registro', {
-                        method: 'POST',
-                        headers: {
-                            Accept: 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            nome,
-                            sobrenome,
-                            email,
-                            senha,
-                            telefone,
-                        })
-                    })
-                
-                    console.log(resposta)
-                    if (resposta.status === 200) {
-                        alert("user criado com sucesso")
-                        router.replace('../home')
-                        console.log(resposta)
-                        
-                    }
-                    else if (resposta.status == 409){
-                        alert("Email já cadastrado")
-                        
-                    }
-                } catch(e) {
-                    console.log(e)
-                }
-        
-
+            } else {
+                alert("Usuário criado com sucesso!");
+                router.replace('../home');
             }
+        } catch (e) {
+            console.log(e);
+            alert("Erro na comunicação com o servidor.");
+        }
+    };
+    
 
     return (
         <View style={styles.container}>

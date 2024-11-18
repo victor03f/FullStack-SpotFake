@@ -26,38 +26,41 @@ const registro = async (req, res) => {
 
 
 const login = async (req, res) => {
-    const { email, senha, } = req.body
+    const { email, senha } = req.body;
+
+    // Verificação de campos obrigatórios
     if (!email || !senha) {
-        res.send('voce deve preencher todos itens')
+        return res.status(400).send('Você deve preencher todos os campos');
     }
-    const userExiste = await User.findOne({ where: { email: email } })
+
+    // Verificar se o usuário existe
+    const userExiste = await User.findOne({ where: { email } });
     if (!userExiste) {
-        res.send('Este usuario não existe')
-        return
+        return res.status(404).send('Este usuário não existe');
     }
 
-    const senhaValida = bcryptjs.compareSync(senha, userExiste.senha)
-    if(!senhaValida){
-        res.send('senha invalida')
-        return
+    // Verificar se a senha é válida
+    const senhaValida = bcryptjs.compareSync(senha, userExiste.senha);
+    if (!senhaValida) {
+        return res.status(401).send('Senha inválida');
     }
+
+    // Gerar o token JWT
     const token = jsonwebtoken.sign(
+        {
+            nome_completo: `${userExiste.nome} ${userExiste.sobrenome}`,
+            email: userExiste.email,
+            status: userExiste.status,
+        },
+        "chavecriptografia", // Troque para uma chave secreta segura
+        { expiresIn: '30d' } // 30 dias
+    );
 
-        {"nome_completo": `${userExiste.nome} ${userExiste.sobrenome}`,
-        "email": userExiste.email,
-        "status": userExiste.status
-    
-    },
-    "chavecriptografia",
-    {expiresIn: 1000*60*60*24*30}
+    // Resposta de sucesso
+    res.status(200).send({
+        msg: "Usuário logado com sucesso",
+        tokenJWT: token,
+    });
+};
 
-
-    )
-
-
-    res.send({
-        msg: "ok usuario logado",
-        tokenJWT: token 
-    })
-}
 export {registro, login}
