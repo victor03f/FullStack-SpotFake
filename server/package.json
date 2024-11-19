@@ -12,6 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@react-navigation/native": "^7.0.3",
+    "@react-navigation/stack": "^7.0.4",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "express": "^4.21.1",
@@ -19,6 +21,9 @@
     "nodemon": "^3.1.7",
     "pg": "^8.13.0",
     "pg-hstore": "^2.3.4",
+    "react-native-gesture-handler": "^2.21.2",
+    "react-native-paper": "^5.12.5",
+    "react-native-reanimated": "^3.16.1",
     "sequelize": "^6.37.4"
   }
 }

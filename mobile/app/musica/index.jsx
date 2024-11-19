@@ -5,7 +5,7 @@ import { Link } from "expo-router";
 
 import NavSpotSound from "../componentes/navSpotSound";
 
-export default Cadastro = () => {
+export default Musicas = () => {
 
     return(
         <View>
