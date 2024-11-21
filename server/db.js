@@ -125,7 +125,7 @@ const criarTabelas = () => {
         .catch((err) => {
             console.log(err)
         })
-    sequelize.sync({ force: true }).then(() => {
+    sequelize.sync({ alter: true }).then(() => {
         console.log('tabela criada')
     })
 }
