@@ -60,6 +60,7 @@ const login = async (req, res) => {
     res.status(200).send({
         msg: "Usuário logado com sucesso",
         tokenJWT: token,
+        userInfo: userExiste,
     });
 };
 

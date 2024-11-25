@@ -1,12 +1,14 @@
 
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, StyleSheet, TextInput, Pressable } from "react-native";
 import { Link } from "expo-router";
 import { router } from "expo-router";
+import { AppContext } from "../scripts/AppContext.js";
 
 const Login = () => {
     const [email, onChangeEmail] = React.useState("");
     const [senha, onChangePassword] = React.useState("");
+    const {userInfo, setUserInfo} = useContext(AppContext)
     const fazerlogin = async () => {
         console.log(email)
         if (!email || !senha) {
@@ -27,7 +29,8 @@ const Login = () => {
         
             console.log(resposta)
             if (resposta.status === 200) {
-                
+                const dados = await resposta.json()
+                setUserInfo(dados.userInfo)
                 router.replace('./home')
                 console.log(resposta)
                 

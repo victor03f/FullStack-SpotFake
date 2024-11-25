@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, Image, Pressable, StyleSheet, SafeAreaView, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { FontAwesome } from '@expo/vector-icons';
+import { AppContext } from '../../scripts/AppContext.js';
 import axios from 'axios';
 
 export default Perfil = () => {
-
     const [newImage, setNewImage] = useState(false);
-
-
+    const { userInfo, setUserInfo } = useContext(AppContext)
 
     const handleSendimage = async () => {
         try {
@@ -35,9 +34,6 @@ export default Perfil = () => {
         }
     }
 
-
-
-
     const enviarImgParaBackend = async (url) => {
         try {
             const resposta = await fetch('http://localhost:8000/profile/1', { //trocar a rota depois
@@ -50,25 +46,21 @@ export default Perfil = () => {
                     url: url
                 })
             })
-        
+
             console.log(resposta)
             if (resposta.status === 200) {
-                
+
                 console.log(resposta)
-                
+
             }
-            else if (resposta.status == 409){
+            else if (resposta.status == 409) {
                 alert("Email já cadastrado")
-                
+
             }
-        } catch(e) {
+        } catch (e) {
             console.log(e)
         }
-
-
     }
-
-
 
     const [user, setUser] = useState({
         username: 'Nome do Usuário',
@@ -84,7 +76,6 @@ export default Perfil = () => {
             Alert.alert('Permissão Necessária', 'Permita o acesso à galeria para selecionar uma foto.');
             return;
         }
-
 
         const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -103,9 +94,12 @@ export default Perfil = () => {
         // Carregar informações do usuário de uma API
         const fetchUserData = async () => {
             try {
-                const res = await axios.get('http://10.0.2.2:8000/v1/user/1'); // URL de exemplo
+                console.log(userInfo)
+                const res = await axios.get('http://10.0.2.2:8000/v1/user/'); // URL de exemplo
+                console.log(res)
                 const userData = res.data.data;
                 userData.createdAt = userData.createdAt.split('T')[0];
+                console.log(userData)
                 setUser(userData);
             } catch (error) {
                 console.error('Erro ao buscar dados do usuário:', error);
@@ -127,14 +121,11 @@ export default Perfil = () => {
                     <Text style={styles.changePhotoText}>Alterar Foto</Text>
                 </Pressable>
 
-
-
                 {newImage && <Pressable onPress={handleSendimage} style={styles.editButton}>
                     <Text style={styles.editButtonText}>Salvar foto</Text></Pressable>}
 
-                <Text style={styles.username}>{user.username}</Text>
-                <Text style={styles.email}>{user.email}</Text>
-                <Text style={styles.joinDate}>Membro desde {user.createdAt}</Text>
+                <Text style={styles.username}>{userInfo.nome}</Text>
+                <Text style={styles.emailuser}>{userInfo.email}</Text>
 
                 <Pressable style={styles.editButton}>
                     <Text style={styles.editButtonText}>Editar Perfil</Text>
@@ -174,7 +165,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginTop: 20,
     },
-    email: {
+    emailuser: {
         fontSize: 16,
         color: '#B3B3B3',
         marginTop: 4,
