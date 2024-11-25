@@ -90,25 +90,9 @@ export default Perfil = () => {
         }
     };
 
-    useEffect(() => {
-        // Carregar informações do usuário de uma API
-        const fetchUserData = async () => {
-            try {
-                console.log(userInfo)
-                const res = await axios.get('http://10.0.2.2:8000/v1/user/'); // URL de exemplo
-                console.log(res)
-                const userData = res.data.data;
-                userData.createdAt = userData.createdAt.split('T')[0];
-                console.log(userData)
-                setUser(userData);
-            } catch (error) {
-                console.error('Erro ao buscar dados do usuário:', error);
-            }
-        };
+ 
 
-        fetchUserData();
-    }, []);
-
+       
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.container}>
