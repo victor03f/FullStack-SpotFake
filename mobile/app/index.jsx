@@ -15,7 +15,7 @@ const Login = () => {
             alert("Prencha todos os campos corretamente")
         }
         try {
-            const resposta = await fetch('http://localhost:8000/autenticacao/login', {
+            const resposta = await fetch('http://10.0.2.2:8000/autenticacao/login', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
