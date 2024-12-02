@@ -26,5 +26,5 @@ app.listen(8000)
 
 
 
- //import { criarTabelas } from "./db.js";
-//criarTabelas()
+// import { criarTabelas } from "./db.js";
+ //criarTabelas()

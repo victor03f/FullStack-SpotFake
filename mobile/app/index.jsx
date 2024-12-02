@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, TextInput, Pressable } from "react-native";
 import { Link } from "expo-router";
 import { router } from "expo-router";
 import { AppContext } from "../scripts/AppContext.js";
-
+//10.0.2.2
 const Login = () => {
     const [email, onChangeEmail] = React.useState("");
     const [senha, onChangePassword] = React.useState("");
@@ -15,7 +15,7 @@ const Login = () => {
             alert("Prencha todos os campos corretamente")
         }
         try {
-            const resposta = await fetch('http://10.0.2.2:8000/autenticacao/login', {
+            const resposta = await fetch('http://localhost:8000/autenticacao/login', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -74,24 +74,7 @@ const Login = () => {
             <Link href={'./cadastro'} style={styles.button}>
                 <Text style={styles.buttonText}>Cadastro</Text>
             </Link>
-            <Link href={'./biblioteca'} style={styles.button}>
-                <Text style={styles.buttonText}>Biblioteca</Text>
-            </Link>
-            <Link href={'./home'} style={styles.button}>
-                <Text style={styles.buttonText}>Home</Text>
-            </Link>
-            <Link href={'./musica'} style={styles.button}>
-                <Text style={styles.buttonText}>Música</Text>
-            </Link>
-            <Link href={'./podcast'} style={styles.button}>
-                <Text style={styles.buttonText}>Podcast</Text>
-            </Link>
-            <Link href={'./busca'} style={styles.button}>
-                <Text style={styles.buttonText}>Busca</Text>
-            </Link>
-            <Link href={'./perfil'} style={styles.button}>
-                <Text style={styles.buttonText}>perfil</Text>
-            </Link>
+           
             <Pressable style={styles.button} onPress={fazerlogin}>
                 <Text style={styles.buttonText}>Entrar</Text>
             </Pressable>

@@ -88,7 +88,7 @@ export default Home = () => {
 
     const getArtista = async () => {
         try {
-            const response = await fetch('http://10.0.2.2:8000/artista');
+            const response = await fetch('http://localhost:8000/artista');
             const artista = await response.json();
             setdataArtistas(artista);
             return;
@@ -99,7 +99,7 @@ export default Home = () => {
 
     const getAlbum = async () => {
         try {
-            const response = await fetch('http://10.0.2.2:8000/album');
+            const response = await fetch('http://localhost:8000/album');
             const album = await response.json();
             setdataAlbums(album);
             return;
@@ -117,7 +117,7 @@ export default Home = () => {
         <View style={styles.mainContainer}>
             {/* Barra superior com o ícone de perfil */}
             <View style={styles.header}>
-                <Text style={styles.headerText}>Spotify</Text>
+                <Text style={styles.headerText}>Spotfake</Text>
                 <TouchableOpacity>
                     <Link href={'../perfil'}>
                   
@@ -131,7 +131,7 @@ export default Home = () => {
                     data={dataArtistas}
                     renderItem={({ item }) => (
                         <View style={styles.card}>
-                            <Image source={{ uri: item.image }} style={styles.cardImage} />
+                            <Image source={{ uri: item.imageUrl }} style={styles.cardImage} />
                             <Text style={styles.cardTitle}>{item.nome}</Text>
                         </View>
                     )}
@@ -144,7 +144,7 @@ export default Home = () => {
                     data={dataAlbums}
                     renderItem={({ item }) => (
                         <View style={styles.card}>
-                            <Image source={{ uri: item.imageUrl }} style={styles.cardImage} />
+                            <Image source={{ uri: item.coverImageUrl }} style={styles.cardImage} />
                             <Text style={styles.cardTitle}>{item.title}</Text>
                         </View>
                     )}

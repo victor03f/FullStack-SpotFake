@@ -170,7 +170,7 @@ const Cadastro = () => {
                 }
             } else {
                 alert("Usuário criado com sucesso!");
-                router.replace('../home');
+                router.replace('../');
             }
         } catch (e) {
             console.log(e);
